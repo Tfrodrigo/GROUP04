@@ -2,6 +2,7 @@ import sqlite3
 
 class DataHandler(object):
     username = ""
+    glob_table =""
     def __init__(self, db_file):
         self.dh = sqlite3.connect(db_file)
         self.c = self.dh.cursor()
@@ -23,3 +24,19 @@ class DataHandler(object):
         self.c.execute("SELECT job FROM users WHERE username=?", (DataHandler.username,))
         jobPosition, = self.c.fetchone()
         return password, jobPosition
+
+    def getMenu(self, table):
+        DataHandler.glob_table = table
+        self.sql = "SELECT menu, price FROM "+ table
+        self.c.execute(self.sql)
+        results = self.c.fetchall()
+        return results
+
+    def AddUser(self,newUser,passWord,job):
+        self.c.execute("INSERT INTO users (username, pass, job) VALUES (?, ?, ?)",(newUser,passWord,job))
+        self.dh.commit()
+#menu = a.getMenu('breakfast')
+
+
+#price = a.getPrice('Tapsi')
+#print(price)
