@@ -12,83 +12,55 @@ import Homepage
 class Main(QtWidgets.QMainWindow, Homepage.Ui_home):
     def __init__(self):
         super(Main, self).__init__()
-        b = "breakfast"
-        l = "lunch"
-        s = "snack"
         self.setupUi(self)
         self.total = 0
-        self.choice = ""
-        self.bf_btn.clicked.connect(self.breakfastMenu)
-        self.lun_btn.clicked.connect(self.lunchMenu)
-        self.snk_btn.clicked.connect(self.snackMenu)
+        self.bf_btn.clicked.connect(partial(self.showMenu,"breakfast"))
+        self.lun_btn.clicked.connect(partial(self.showMenu,"lunch"))
+        self.snk_btn.clicked.connect(partial(self.showMenu,"snack"))
         self.map = {}
+        self.current_choice = ""
+        self.price = 0
+        self.menu_combo.activated.connect(self.showPrice)
+        self.complete_btn.clicked.connect(self.completeOrder)
+        self.add_btn.clicked.connect(self.orderList)
 
-    #def showMenu(self,mealTime):
-    #	print("showMenu")
-    #	self.map = {}
-    #	self.menu_combo.clear()
-    #	self.pricedMenu = dh.getMenu(mealTime)
-    #	for x in self.pricedMenu:
-    #		self.menu_combo.addItem(x[0])
-    #		self.map[x[0]] = x[1]
-    #	print("selfmap: ",self.map)
-    #	f = self.menu_combo.currentText()
-    #	print("f: ",f)
-    #	self.menu_combo.activated.connect(self.showPrice)
-
-    def breakfastMenu(self):
+    def showMenu(self,mealTime):
+    	print("showMenu")
     	self.map = {}
     	self.menu_combo.clear()
-    	self.pricedMenu = dh.getMenu("breakfast")
+    	self.pricedMenu = dh.getMenu(mealTime)
     	for x in self.pricedMenu:
     		self.menu_combo.addItem(x[0])
     		self.map[x[0]] = x[1]
     	print("selfmap: ",self.map)
-    	self.menu_combo.view().pressed.connect(self.showPrice)
+    	f = self.menu_combo.currentText()
+    	print("f: ",f)
+    	
 
-    def lunchMenu(self):
-    	self.map = {}
-    	self.menu_combo.clear()
-    	self.pricedMenu = dh.getMenu("lunch")
-    	for x in self.pricedMenu:
-    		self.menu_combo.addItem(x[0])
-    		self.map[x[0]] = x[1]
-    	print("selfmap: ",self.map)
-    	self.menu_combo.view().pressed.connect(self.showPrice)
-
-    def snackMenu(self):
-    	self.map = {}
-    	self.menu_combo.clear()
-    	self.pricedMenu = dh.getMenu("breakfast")
-    	for x in self.pricedMenu:
-    		self.menu_combo.addItem(x[0])
-    		self.map[x[0]] = x[1]
-    	print("selfmap: ",self.map)
-    	self.menu_combo.view().pressed.connect(self.showPrice)
 
     def showPrice(self):
-    	self.current_choice = ""
-    	self.current_choice = self.menu_combo.currentText()
-    	print("current choice:",self.current_choice)
-    	print("showPrice")
-    	
-    	self.price = 0
-    	print(self.map)
-    	self.price = self.map[self.current_choice]
-    	self.price_lbl.setText(str(self.price)+"0")
-    	print("pricelbl")
-    	self.add_btn.clicked.connect(partial(self.orderList,self.current_choice,self.price))
+        self.current_choice = ""
+        self.current_choice = self.menu_combo.currentText()
+        print(self.map)
+        print("current choice:",self.current_choice)
+        print("showPrice")
+        
+        self.price = 0
+        print(self.map)
+        self.price = self.map[self.current_choice]
+        self.price_lbl.setText(str(self.price)+"0")
+        print("pricelbl")
+        
 
-    def orderList(self,meal,cost):
+    def orderList(self):
     	print("orderList")
-    	print(meal)
-    	print(cost)
-    	
-    	self.total = self.total + cost
-    	self.order_list.addItem(meal)
+    	print(self.current_choice)
+    	print(self.price)
+    	self.total = self.total + self.price
+    	self.order_list.addItem(self.current_choice)
     	self.total_cost.setText(str(self.total))
 
-    	self.complete_btn.clicked.connect(self.completeOrder)
+    	
 
     def completeOrder(self):
     	print("completeOrder")

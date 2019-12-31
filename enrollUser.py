@@ -6,7 +6,7 @@ from handler import DataHandler
 
 dh = DataHandler('VMES.db')
 
-import temp_admin, enroll_ui, admin
+import admin_ui, enroll_ui, admin
 
 class Main(QtWidgets.QMainWindow, enroll_ui.Ui_userRegistration):
     def __init__(self):
@@ -19,7 +19,11 @@ class Main(QtWidgets.QMainWindow, enroll_ui.Ui_userRegistration):
         passWord = self.pass_reg.text()
         passWord2 = self.pass2_reg.text()
         job = self.job_combo.currentText()
+        print(passWord)
+        print(passWord2)
+        print(job)
         if(passWord == passWord2):
+            print("equals")
             dh.AddUser(newUser,passWord,job)
             self.msg = QMessageBox()
             self.msg.setWindowTitle("ENROLLED SUCCESSFULY!")
@@ -34,7 +38,7 @@ class Main(QtWidgets.QMainWindow, enroll_ui.Ui_userRegistration):
             self.msg.setWindowTitle("ERROR!")
             self.msg.setText("Doesn't Match! Try again")
             self.msg.setIcon(QMessageBox.Critical)
-            self.x = msg.exec_()
+            self.x = self.msg.exec_()
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     form = Main()
