@@ -107,3 +107,5 @@ if __name__ == "__main__":
     ui.setupUi(home)
     home.show()
     sys.exit(app.exec_())
+
+    
