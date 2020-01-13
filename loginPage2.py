@@ -30,6 +30,7 @@ class Ui_MainWindow2(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.blank_pass = QtWidgets.QLineEdit(self.centralwidget)
+        self.blank_pass.setEchoMode(QtWidgets.QLineEdit.Password)
         self.blank_pass.setGeometry(QtCore.QRect(20, 250, 401, 41))
         font = QtGui.QFont()
         font.setPointSize(10)
