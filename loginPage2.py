@@ -27,6 +27,7 @@ class Ui_MainWindow2(object):
 "{\n"
 "color: black;\n"
 "}")
+
         self.centralwidget = QtWidgets.QWidget(MainWindow2)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -52,6 +53,7 @@ class Ui_MainWindow2(object):
 "color: rgb(255, 255, 255);")
         self.label_2.setObjectName("label_2")
         self.blank_pass = QtWidgets.QLineEdit(self.centralwidget)
+        self.blank_pass.setEchoMode(QtWidgets.QLineEdit.Password)
         self.blank_pass.setGeometry(QtCore.QRect(20, 250, 401, 41))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -83,7 +85,7 @@ class Ui_MainWindow2(object):
         self.label.setText(_translate("MainWindow2", "VMES CANTEEN"))
         self.label_2.setText(_translate("MainWindow2", "ENTER PASSWORD"))
         self.btn_login.setText(_translate("MainWindow2", "LOGIN"))
-        self.label_3.setText(_translate("MainWindow2", "TextLabel"))
+        
 import source
 
 
